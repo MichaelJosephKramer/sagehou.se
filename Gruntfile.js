@@ -9,6 +9,9 @@
 
 module.exports = function (grunt) {
 
+    // Load grunt-build-control
+    grunt.loadNpmTasks('grunt-build-control');
+
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
 
@@ -329,6 +332,25 @@ module.exports = function (grunt) {
                     ]
                 }]
             },
+            heroku: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: 'heroku',
+                    dest: '<%= yeoman.dist %>',
+                    src: [
+                        '../package.json',
+                        'Procfile',
+                        'web.js'
+                    ]
+                }, {
+                    expand: true,
+                    dot: true,
+                    cwd: '.',
+                    dest: '<%= yeoman.dist %>',
+                    src: [ 'package.json' ],
+                }]
+            },
             styles: {
                 expand: true,
                 dot: true,
@@ -370,6 +392,20 @@ module.exports = function (grunt) {
                 'imagemin',
                 'svgmin'
             ]
+        },
+
+        buildcontrol: {
+            options: {
+                dir: 'dist',
+                push: true,
+                commit: true
+            },
+            heroku: {
+                options: {
+                    remote: 'git@heroku.personal:sagehouse.git',
+                    branch: 'master'
+                }
+            }
         }
     });
 
@@ -417,6 +453,7 @@ module.exports = function (grunt) {
         'cssmin',
         'uglify',
         'copy:dist',
+        'copy:heroku',
         'modernizr',
         'rev',
         'usemin',
