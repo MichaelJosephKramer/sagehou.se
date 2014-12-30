@@ -402,7 +402,7 @@ module.exports = function (grunt) {
             },
             heroku: {
                 options: {
-                    remote: 'git@heroku.personal:sagehouse.git',
+                    remote: 'git@heroku.sagehouse:sagehouse.git',
                     branch: 'master'
                 }
             }
